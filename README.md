@@ -1,70 +1,116 @@
-# Getting Started with Create React App
+# Advance Biometric Face Authentication System With Data Management (REACT VERSION)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a web application that implements facial recognition for user authentication using **Django** as the backend and **React** for the frontend. The app allows users to register and log in using face data and includes a dashboard for managing user-specific data.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Getting Started
 
-### `npm start`
+### Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Ensure you have the following installed on your machine:
+- **Python** (3.8+)
+- **Node.js** (with npm)
+- **PostgreSQL**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Instructions on How to Run the Application Locally
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Clone the Repository:
+```bash
+git clone https://github.com/DASUCCESS/Advance-Face-Authentication-With-Data-Management-React-Version.git
+```
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 1. Set Up the Backend:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Navigate to the backend directory:**
+   ```bash
+   cd djangofaceauth
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. **Create and activate a virtual environment:**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate          # For macOS/Linux
+   source venv/Scripts/activate      # For Windows
+   ```
 
-### `npm run eject`
+3. **Install the required packages:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+   **Note:** If you encounter issues, especially with installing `face_recognition`, follow these steps:
+   - Go to [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
+   - Click "Download Build Tools."
+   - Install all basic requirements needed for builds to ensure `face_recognition` installs correctly.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+4. **Create a database in your local host (PGAdmin recommended):**
+   - Refer to the `DATABASES` configuration in the `settings.py` file.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+5. **Apply database migrations:**
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+6. **Start the Django development server:**
+   ```bash
+   python manage.py runserver
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+### 2. Set Up the Frontend:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+*(Assuming you have done the basic setup to start a React project)*
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. **Navigate to the frontend directory:**
+   ```bash
+   cd reactfaceauth
+   ```
 
-### Code Splitting
+2. **Install the dependencies:**
+   ```bash
+   npm install
+   ```
+   **Note:** Ensure you have these packages installed if you encounter issues:
+   ```bash
+   npm install axios bootstrap jwt-decode moment react react-bootstrap react-dom react-helmet react-icons react-router-dom react-scripts react-webcam
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+3. **Start the React development server:**
+   ```bash
+   npm start
+   ```
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Access the Application
 
-### Making a Progressive Web App
+- **Frontend:** Open your browser and go to `http://localhost:3000`
+- **Backend:** Visit `http://localhost:8000`
+- **To access the full API for user data management:** `http://localhost:8000/api/get_alluser_info/`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## Architecture and Technologies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Overview
+- **Backend:** Django REST Framework, PostgreSQL, Simple JWT for authentication, and `face_recognition` library for facial recognition.
+- **Frontend:** React, React-Bootstrap for styling, Axios for API calls, React-Router for navigation, and `react-webcam` for capturing images.
+- **Authentication:** Uses JWT tokens for secure communication between frontend and backend.
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Key Features
 
-### `npm run build` fails to minify
+- **User Registration and Login:** Users can sign up and log in using face data.
+- **Dashboard:** Authenticated users can create, read, update, and delete personal data for management.
+- **Secure Authentication:** JWT tokens ensure secure user authentication and authorization.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+Developed by: Engr Luqman  (Full Stack Developer)
