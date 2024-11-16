@@ -28,7 +28,7 @@ git clone https://github.com/DASUCCESS/Advance-Face-Authentication-With-Data-Man
 
 1. **Navigate to the backend directory:**
    ```bash
-   cd djangofaceauth
+   cd to root folder of the application
    ```
 
 2. **Create and activate a virtual environment:**
