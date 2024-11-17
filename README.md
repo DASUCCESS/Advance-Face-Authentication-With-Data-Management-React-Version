@@ -21,49 +21,11 @@ Ensure you have the following installed on your machine:
 ```bash
 git clone https://github.com/DASUCCESS/Advance-Face-Authentication-With-Data-Management-React-Version.git
 ```
+Once you clone this project, rename the Advance-Face-Authentication-With-Data-Management-React-Version folder name to reactfaceauth to ensure consistency
 
 ---
 
-### 1. Set Up the Backend:
-
-1. **Navigate to the backend directory:**
-   ```bash
-   cd to root folder of the application
-   ```
-
-2. **Create and activate a virtual environment:**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate          # For macOS/Linux
-   source venv/Scripts/activate      # For Windows
-   ```
-
-3. **Install the required packages:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-   **Note:** If you encounter issues, especially with installing `face_recognition`, follow these steps:
-   - Go to [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
-   - Click "Download Build Tools."
-   - Install all basic requirements needed for builds to ensure `face_recognition` installs correctly.
-
-4. **Create a database in your local host (PGAdmin recommended):**
-   - Refer to the `DATABASES` configuration in the `settings.py` file.
-
-5. **Apply database migrations:**
-   ```bash
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
-
-6. **Start the Django development server:**
-   ```bash
-   python manage.py runserver
-   ```
-
----
-
-### 2. Set Up the Frontend:
+### Set Up the Frontend:
 
 *(Assuming you have done the basic setup to start a React project)*
 
