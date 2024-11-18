@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Button, Table, Form, Modal } from 'react-bootstrap';
-import { getUserDataItems, createData, updateData, deleteData, logoutUser } from '../ApiHelper/ApiHelper';
+import { getUserDataItems, getUserData, createData, updateData, deleteData, logoutUser } from '../ApiHelper/ApiHelper';
 import AppNavbar from "../Pages/NavBar";
 import moment from 'moment';
 
@@ -11,29 +11,53 @@ const Dashboard = () => {
     const [showModal, setShowModal] = useState(false);
     const [formData, setFormData] = useState({ title: '', content: '' });
     const [editingData, setEditingData] = useState(null);
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         const fetchAllUserData = async () => {
             try {
                 const userData = await getUserDataItems();
-                setData(userData); 
+                setData(userData);
             } catch (error) {
                 console.error('Error fetching user data:', error);
                 navigate('/login');
             }
         };
 
+        const fetchUserInfo = async () => {
+            try {
+                const user = await getUserData();
+                setUserInfo(user);
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+            }
+        };
+
         fetchAllUserData();
+        fetchUserInfo();
     }, [navigate]);
 
     const handleCreate = async () => {
         try {
             const result = await createData(formData);
-            setData([...data, result]); 
+            setData([...data, result]);
             setShowModal(false);
+            setFormData({ title: '', content: '' });
         } catch (error) {
             console.error('Error creating data:', error);
+        }
+    };
+
+    const handleUpdate = async () => {
+        try {
+            const result = await updateData(editingData.id, formData);
+            setData(data.map(item => (item.id === result.id ? result : item)));
+            setShowModal(false);
+            setEditingData(null);
+            setFormData({ title: '', content: '' }); 
+        } catch (error) {
+            console.error('Error updating data:', error);
         }
     };
 
@@ -43,20 +67,10 @@ const Dashboard = () => {
         setShowModal(true);
     };
 
-    const handleUpdate = async () => {
-        try {
-            const result = await updateData(editingData.id, formData);
-            setData(data.map(item => (item.id === result.id ? result : item))); 
-            setShowModal(false);
-        } catch (error) {
-            console.error('Error updating data:', error);
-        }
-    };
-
     const handleDelete = async (id) => {
         try {
             await deleteData(id);
-            setData(data.filter(item => item.id !== id)); 
+            setData(data.filter(item => item.id !== id));
         } catch (error) {
             console.error('Error deleting data:', error);
         }
@@ -64,7 +78,7 @@ const Dashboard = () => {
 
     const handleLogout = () => {
         logoutUser();
-        navigate('/login'); 
+        navigate('/login');
     };
 
     return (
@@ -75,7 +89,11 @@ const Dashboard = () => {
 
                 {/* Action buttons */}
                 <div className="d-flex justify-content-between mb-4">
-                    <Button variant="primary" onClick={() => setShowModal(true)} className="shadow-sm">
+                    <Button variant="primary" onClick={() => {
+                        setEditingData(null); 
+                        setFormData({ title: '', content: '' }); 
+                        setShowModal(true);
+                    }} className="shadow-sm">
                         Add New Data
                     </Button>
                     <Button variant="danger" onClick={handleLogout} className="shadow-sm">
@@ -99,8 +117,8 @@ const Dashboard = () => {
                             <tr key={item.id}>
                                 <td>{item.title}</td>
                                 <td>{item.content}</td>
-                                <td>{moment(item.created_at).format('YYYY-MM-DD | HH:mm')}</td> 
-                                <td>{moment(item.updated_at).format('YYYY-MM-DD | HH:mm')}</td> 
+                                <td>{moment(item.created_at).format('YYYY-MM-DD | HH:mm')}</td>
+                                <td>{moment(item.updated_at).format('YYYY-MM-DD | HH:mm')}</td>
                                 <td>
                                     <div className="d-flex gap-3">
                                         <Button variant="warning" onClick={() => handleEdit(item)}>
@@ -148,9 +166,9 @@ const Dashboard = () => {
                         </Button>
                         <Button
                             variant="primary"
-                            onClick={handleCreate}
+                            onClick={editingData ? handleUpdate : handleCreate}
                         >
-                            {'Create'}
+                            {editingData ? 'Update' : 'Create'}
                         </Button>
                     </Modal.Footer>
                 </Modal>
